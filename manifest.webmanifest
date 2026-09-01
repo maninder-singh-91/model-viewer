@@ -1,0 +1,8 @@
+{
+  "name": "Adaptive GLB Viewer V2.19",
+  "short_name": "GLB Viewer",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#090a0c",
+  "theme_color": "#090a0c"
+}
