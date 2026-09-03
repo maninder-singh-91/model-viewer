@@ -6,3 +6,12 @@
 
 
 \n  .v211-sidebar-toggle{position:fixed;right:348px;top:50%;transform:translateY(-50%);z-index:10000;width:28px;height:58px;border:1px solid #3b3e47;border-right:0;border-radius:8px 0 0 8px;background:#111319;color:#d6ae68;cursor:pointer;font-size:18px;box-shadow:0 4px 18px #0005;transition:right .24s ease,background .2s}\n  .v211-sidebar-toggle:hover{background:#1a1c22}\n  body.v211-sidebar-hidden aside{transform:translateX(100%);position:fixed;right:0;top:0;bottom:0;z-index:9998}\n  body.v211-sidebar-hidden .layout{grid-template-columns:minmax(0,1fr) 0!important}\n  body.v211-sidebar-hidden .v211-sidebar-toggle{right:0;border-right:1px solid #3b3e47;border-radius:8px 0 0 8px}\n  aside{transition:transform .24s ease}\n  @media(max-width:820px){.v211-sidebar-toggle{right:0;top:50%;}.layout aside{position:fixed!important;right:0;top:60px;bottom:0;width:min(88vw,360px)!important;height:auto!important;z-index:9998;background:#0d0e12;transform:translateX(100%);overflow:auto!important;border-left:1px solid #292b32!important}.layout aside.v211-mobile-open{transform:translateX(0)}body.v211-sidebar-hidden aside{transform:translateX(100%)}body:not(.v211-sidebar-hidden) .layout aside{transform:translateX(0)}body:not(.v211-sidebar-hidden) .v211-sidebar-toggle{right:min(88vw,360px)}}\n
+
+/* Primary settings order: preset first, then material-specific workspaces. */
+.controls{display:flex;flex-direction:column}
+.controls>*{order:10}
+#v219ResolutionPanel{order:0}
+.scene-preset-section{order:1}
+.scene-preset-section .preset-controls{margin:0 0 6px!important;border-radius:6px!important}
+.metal-section{order:2}
+.diamond-section{order:3}
