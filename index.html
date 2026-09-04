@@ -6960,13 +6960,15 @@ body.v213-sidebar-hidden .layout{grid-template-columns:minmax(0,1fr) 0!important
 <script id="v219-runtime-patch">
 (()=>{
  const VERSION='V2.19';
- window.__viewerResolutionScale=1;
+ const mobileResolutionDefault=matchMedia('(max-width:820px), (max-width:1024px) and (pointer:coarse)').matches;
+ const defaultResolutionScale=mobileResolutionDefault?2:.75;
+ window.__viewerResolutionScale=defaultResolutionScale;
  const choices=[['auto','Auto · Adaptive'],['0.5','50% · Fast'],['0.75','75% · Performance'],['1','100% · Native'],['1.5','150% · High'],['2','200% · Final']];
  function install(){
    const aside=document.querySelector('aside'); if(!aside){setTimeout(install,120);return;}
    if(document.getElementById('v219ResolutionPanel')) return;
-   const panel=document.createElement('div'); panel.id='v219ResolutionPanel'; panel.innerHTML='<div class="v219ResHead"><b>Adaptive viewport resolution</b><span id="v219ResValue">100%</span></div><select id="v219ResSelect"></select><div id="v219ResActual">Internal render: detecting…</div><small>Auto keeps adaptive performance. 150–200% is intended for final viewport inspection.</small>';
-   const select=panel.querySelector('select'); choices.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;if(v==='1')o.selected=true;select.appendChild(o)});
+   const panel=document.createElement('div'); panel.id='v219ResolutionPanel'; panel.innerHTML='<div class="v219ResHead"><b>Adaptive viewport resolution</b><span id="v219ResValue">'+Math.round(defaultResolutionScale*100)+'%</span></div><select id="v219ResSelect"></select><div id="v219ResActual">Internal render: detecting…</div><small>Auto keeps adaptive performance. 150–200% is intended for final viewport inspection.</small>';
+   const select=panel.querySelector('select'); choices.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;if(v===String(defaultResolutionScale))o.selected=true;select.appendChild(o)});
    // Keep the adaptive viewport control at the top of the settings list.
    const controls=aside.querySelector('.controls')||aside; const heading=controls.querySelector(':scope > h2');
    if(heading) heading.insertAdjacentElement('afterend',panel); else controls.insertBefore(panel,controls.firstChild);
