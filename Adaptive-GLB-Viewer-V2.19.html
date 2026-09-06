@@ -6964,7 +6964,7 @@ body.v213-sidebar-hidden .layout{grid-template-columns:minmax(0,1fr) 0!important
 (()=>{
  const VERSION='V2.19';
  const mobileResolutionDefault=matchMedia('(max-width:820px), (max-width:1024px) and (pointer:coarse)').matches;
- const defaultResolutionScale=mobileResolutionDefault?2:.75;
+ const defaultResolutionScale=mobileResolutionDefault?2:1;
  window.__viewerResolutionScale=defaultResolutionScale;
  const choices=[['auto','Auto · Adaptive'],['0.5','50% · Fast'],['0.75','75% · Performance'],['1','100% · Native'],['1.5','150% · High'],['2','200% · Final']];
  function install(){
