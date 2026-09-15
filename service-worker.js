@@ -1,5 +1,16 @@
-const CACHE='adaptive-glb-viewer-v2.19-bloom-spread-r173';
-const CORE=['./','./index.html','./assets/env-gem-4.exr','./assets/env_metal_001_d01c4504e0.hdr','./assets/models/ring02.glb'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});
+
+const PREFIX='j-viewer-'+self.registration.scope+'-';
+const CACHE=PREFIX+'release-h88-80c8c18b6f8a';
+const CORE=["./","./index.html","./manifest.webmanifest","./assets/viewer-9c578aa79823.js","./assets/env-gem-4.exr","./assets/env_metal_001_d01c4504e0.hdr","./assets/preset-material-sphere.png","./assets/preset-gem-diamond.png","./assets/models/ring02.glb"];
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith(PREFIX)&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET')return;
+  const url=new URL(event.request.url),base=new URL(self.registration.scope);
+  if(url.origin!==base.origin||!url.pathname.startsWith(base.pathname))return;
+  if(event.request.mode==='navigate'){
+    event.respondWith(fetch(event.request).catch(()=>caches.open(CACHE).then(cache=>cache.match('./index.html'))));return;
+  }
+  if(!CORE.some(file=>new URL(file,base).href===url.href))return;
+  event.respondWith(caches.open(CACHE).then(cache=>cache.match(event.request).then(hit=>hit||fetch(event.request))));
+});

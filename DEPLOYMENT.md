@@ -1,9 +1,25 @@
 # Deployment
 
-Upload the contents of this folder to your web host and serve `index.html` over HTTP/HTTPS. Keep the `assets` folder beside `index.html`; it contains the default Metal HDRI and the `ring02.glb` development model. The original Diamond HDRI is embedded in the viewer.
+The repository root is the static H88 production release. Serve `index.html` over HTTP or HTTPS with its `assets` directory beside it. No Node build step is required on the host. Model and environment URLs support a repository subpath such as `/model-viewer/`.
 
-The Jewellery preset starts with the settings captured from the live `ring02.glb` development viewport.
+## Defaults
 
-For local testing, `index.html` can be opened directly with `file://`; PWA/service-worker registration is intentionally skipped in that mode.
+- The single-diamond `ring02.glb` loads automatically on hosted sites and localhost.
+- The exact scene and material settings are recorded in `SOURCE/releases/h88-settings.json`.
+- High viewport quality is selected initially; the floating selector retains Medium, High, and Ultra.
+- The main settings panel and its toggle are hidden on desktop and mobile. Selecting a mesh does not reveal them.
+- Metal bevel is enabled at width 0.18 and strength 0.55.
+- Camera FOV is 20, smooth navigation is enabled, rotation inertia is 1, and zoom acceleration is 2.5.
+- The captured closest-zoom ratio is 1.0601555395234405. It is active from startup and preserves zoom-out. The minimum distance scales with model bounds and the existing responsive camera fit.
+- Diamond ray depth stays at four bounces during rotation and zoom. Adaptive interaction quality is disabled.
+- The model-name overlay is hidden. Quick materials, quality, Stats, Reset view, and Open model remain available.
 
-For GitHub Pages, keep `index.html`, `manifest.webmanifest`, and `service-worker.js` at the repository root (or configure the Pages root accordingly).
+`Adaptive-GLB-Viewer-V2.19.html` redirects to the current entry point. Historical `SOURCE/src` files are retained for reference and are not the H88 production entry point.
+
+## Hosting
+
+For GitHub Pages, select the repository root as the publishing directory. Other static hosts can also serve the root directly. Keep all files listed in `SHA256.txt`; verify them with `shasum -a 256 -c SHA256.txt`.
+
+Serve HTML and `service-worker.js` with revalidation. The content-hashed viewer module can be cached immutably. The service worker is scoped to the deployment path and caches the bundled model, environments, and quick-control images. Imported local files are not uploaded or included in this cache.
+
+Use HTTP for local testing rather than opening `index.html` as a file. Offline reload is available after the first successful service-worker installation. A Git push updates repository contents; the configured hosting provider determines when those contents become public.
