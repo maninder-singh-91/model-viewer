@@ -7,7 +7,8 @@ The repository root is the static H94 production release. Serve `index.html` ove
 - The single-diamond `ring02.glb` loads automatically on hosted sites and localhost.
 - The exact scene and material settings are recorded in `SOURCE/releases/h94-settings.json`.
 - High diamond quality is selected initially; the floating selector retains Medium, High, and Ultra. It adjusts only diamond optical sampling. The viewport and metal remain native-resolution at every preset.
-- The main settings panel and its toggle are hidden on desktop and mobile. Selecting a mesh does not reveal them.
+- The main settings panel and its toggle are hidden on desktop and mobile.
+- Viewport object selection is disabled for clicks and taps. Orbit, zoom, Reset view and material swatches remain available.
 - Metal bevel is enabled at width 0.18 and strength 0.55.
 - Camera FOV is 20, smooth navigation is enabled, rotation inertia is 0, and zoom acceleration is 2.5.
 - The captured closest-zoom ratio is 1.0601555395234405. It is active from startup and preserves zoom-out. The minimum distance scales with model bounds and the existing responsive camera fit.

@@ -1,8 +1,10 @@
 # H94 Production Release
 
-Based on the validated Diamond Traversal H94 preview. The production shader is
-byte-identical to that preview; deployment hides the main settings panel and its
-toggle on desktop and mobile, including after mesh selection.
+Based on the validated Diamond Traversal H94 preview. The shaders are unchanged;
+deployment hides the main settings panel and its toggle on desktop and mobile.
+Production pointer handlers skip object picking for clicks and taps while
+retaining orbit, zoom and material swatches. The settings-enabled preview is
+unchanged.
 
 - H90 constant-width BVH/triangle texture addressing.
 - H92 same-facet internal diamond edge antialiasing and zero rotation inertia.
