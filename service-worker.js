@@ -1,7 +1,7 @@
 
 const PREFIX='j-viewer-'+self.registration.scope+'-';
-const CACHE=PREFIX+'release-h94-20ab3f126ef2';
-const CORE=["./","./index.html","./manifest.webmanifest","./assets/viewer-f37c7ad4aaa9.js","./assets/env-gem-4.exr","./assets/env_metal_001_d01c4504e0.hdr","./assets/preset-material-sphere.png","./assets/preset-gem-diamond.png","./assets/models/ring02.glb"];
+const CACHE=PREFIX+'model-view-h136-cc0a030d4b99';
+const CORE=["./","./index.html","./assets/viewer-45538b6ca600.js","./assets/env-gem-4.exr","./assets/env_metal_001_d01c4504e0.hdr","./assets/preset-material-sphere.png","./assets/preset-gem-diamond.png","./assets/models/ring02.glb","./assets/models/verdant-gemstone.glb","./manifest.webmanifest","./viewer-settings.json"];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith(PREFIX)&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
