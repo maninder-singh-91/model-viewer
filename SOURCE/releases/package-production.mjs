@@ -4,9 +4,9 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 
-// Package the validated H164 preview without test models or the editor UI.
+// Package the validated H176 preview without test models or the editor UI.
 const destination=path.resolve(import.meta.dirname,'../..');
-const source=path.resolve(process.argv[2]||path.join(destination,'../J-Viewer-Shared-Diamonds-H164'));
+const source=path.resolve(process.argv[2]||path.join(destination,'../J-Viewer-Optical-Memory-H176'));
 const hash=data=>createHash('sha256').update(data).digest('hex');
 const views=JSON.parse(fs.readFileSync(new URL('h136-default-views.json',import.meta.url),'utf8'));
 for(const [model,view] of Object.entries(views)){
@@ -20,7 +20,7 @@ let files=fs.readFileSync(path.join(source,'SHA256SUMS.txt'),'utf8').trim().spli
 let html=fs.readFileSync(path.join(source,'index.html'),'utf8');
 const previous=html.match(/src="\.\/(assets\/viewer-[a-f0-9]+\.js)"/)[1];
 let js=fs.readFileSync(path.join(source,previous),'utf8');
-assert.ok(js.includes('const sharedCutsH164='),'Expected the validated H164 runtime');
+assert.ok(js.includes('const directProducerH176=')&&js.includes('const reflectionTagsH176='),'Expected the validated H176 runtime');
 const replace=(before,after)=>{assert.equal(js.split(before).length,2,'Production anchor: '+before.slice(0,100));js=js.replace(before,after);};
 for(const [model,file,name,label] of [
  ['round-ring','round-ring.glb','Round-Ring.glb','Round ring'],
@@ -45,7 +45,7 @@ const check=spawnSync(process.execPath,['--input-type=module','--check'],{input:
 const asset='assets/viewer-'+hash(js).slice(0,12)+'.js';
 html=html.replace('<html lang="en">','<html lang="en" class="deployment-h88">').replace(previous,asset)
  .replace(/<title>[^<]+<\/title>/,'<title>J Viewer | Jewellery Model Viewer</title>')
- .replace(/(<meta name="j-viewer-build" content=")[^"]+/, '$12.19-H164-production');
+ .replace(/(<meta name="j-viewer-build" content=")[^"]+/, '$12.19-H176-production');
 assert.ok(html.includes('<html lang="en" class="deployment-h88">'));
 assert.ok(html.includes('html.deployment-h88 #v213SidebarTab'));
 for(const file of files.filter(file=>!['index.html','service-worker.js',previous].includes(file))){
@@ -54,7 +54,7 @@ for(const file of files.filter(file=>!['index.html','service-worker.js',previous
 fs.writeFileSync(path.join(destination,asset),js);fs.writeFileSync(path.join(destination,'index.html'),html);
 const releaseFiles=files.map(file=>file===previous?asset:file),core=['./',...releaseFiles.map(file=>'./'+file).filter(file=>file!=='./service-worker.js'&&!file.endsWith('.bin.gz'))];
 const sw=fs.readFileSync(path.join(source,'service-worker.js'),'utf8')
- .replace(/const CACHE=PREFIX\+'[^']+';/,"const CACHE=PREFIX+'h164-production-"+hash(html).slice(0,12)+"';")
+ .replace(/const CACHE=PREFIX\+'[^']+';/,"const CACHE=PREFIX+'h176-production-"+hash(html).slice(0,12)+"';")
  .replace(/const CORE=\[[^\n]+\];/,'const CORE='+JSON.stringify(core)+';');
 fs.writeFileSync(path.join(destination,'service-worker.js'),sw);
 fs.writeFileSync(path.join(destination,'SHA256.txt'),releaseFiles.map(file=>hash(fs.readFileSync(path.join(destination,file)))+'  '+file).join('\n')+'\n');
